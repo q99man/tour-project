@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, X } from 'lucide-react';
 
 const NAVIGATION = [
   { 
@@ -19,6 +20,7 @@ const NAVIGATION = [
 
 export const Header = ({ onLogoClick }: { onLogoClick?: () => void }) => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,6 +33,12 @@ export const Header = ({ onLogoClick }: { onLogoClick?: () => void }) => {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, [activeMenu]);
+
+  useEffect(() => {
+    if (mobileOpen) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = '';
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
 
   return (
     <header className="w-full p-6 md:px-10 md:py-6 flex justify-between items-center z-50 bg-[#fafafa]/80 backdrop-blur-md border-b border-gray-200">
@@ -87,12 +95,81 @@ export const Header = ({ onLogoClick }: { onLogoClick?: () => void }) => {
         ))}
       </nav>
       
-      {/* Mobile Menu Icon Placeholder */}
-      <button type="button" className="md:hidden text-gray-600 cursor-pointer hover:text-black transition-colors" onClick={() => console.log('Mobile menu clicked')}>
-        <span className="block w-6 h-0.5 bg-current mb-1"></span>
-        <span className="block w-6 h-0.5 bg-current mb-1"></span>
-        <span className="block w-6 h-0.5 bg-current"></span>
+      {/* Mobile: 햄버거 아이콘 */}
+      <button
+        type="button"
+        className="md:hidden flex flex-col justify-center gap-1.5 w-10 h-10 text-gray-600 cursor-pointer hover:text-black transition-colors"
+        onClick={() => setMobileOpen(true)}
+        aria-label="메뉴 열기"
+      >
+        <span className="block w-6 h-0.5 bg-current" />
+        <span className="block w-6 h-0.5 bg-current" />
+        <span className="block w-6 h-0.5 bg-current" />
       </button>
+
+      {/* Mobile: 서랍 메뉴 - body에 포탈로 렌더, 아래로 슬라이드 + 살짝 투명 */}
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {mobileOpen && (
+              <>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="fixed inset-0 bg-black/25 z-[70] md:hidden backdrop-blur-[2px]"
+                  onClick={() => setMobileOpen(false)}
+                  aria-hidden
+                />
+                <motion.aside
+                  initial={{ opacity: 0, y: '-100%' }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: '-100%' }}
+                  transition={{ type: 'tween', duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+                  className="fixed top-0 left-0 right-0 max-h-[85vh] z-[80] md:hidden flex flex-col rounded-b-2xl overflow-hidden bg-white/95 backdrop-blur-md shadow-2xl border-b border-gray-200/50"
+                >
+                  <div className="p-5 flex justify-between items-center border-b border-gray-200/80 shrink-0">
+                    <span className="text-lg font-serif font-bold tracking-tighter text-gray-900">Menu</span>
+                    <button
+                      type="button"
+                      onClick={() => setMobileOpen(false)}
+                      className="p-2 text-gray-600 hover:text-black cursor-pointer"
+                      aria-label="메뉴 닫기"
+                    >
+                      <X size={24} />
+                    </button>
+                  </div>
+                  <nav className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-5 pb-8 font-sans">
+                    <ul className="list-none m-0 p-0">
+                      {NAVIGATION.map((item) => (
+                        <li key={item.label} className="border-b border-gray-100 last:border-0">
+                          <p className="pt-4 pb-2 text-xs font-bold tracking-widest uppercase text-gray-500">
+                            {item.label}
+                          </p>
+                          <ul className="list-none m-0 pb-4 pl-0">
+                            {item.sub.map((subItem) => (
+                              <li key={subItem}>
+                                <a
+                                  href="#"
+                                  onClick={() => setMobileOpen(false)}
+                                  className="block py-2.5 text-sm font-medium text-gray-800 hover:text-black cursor-pointer"
+                                >
+                                  {subItem}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                </motion.aside>
+              </>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
     </header>
   );
 };

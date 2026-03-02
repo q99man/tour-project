@@ -33,7 +33,9 @@ const HomeContent = ({
   setExitRect,
 }: HomeContentProps) => {
   const handleScrollTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const main = document.getElementById('main-scroll');
+    if (main) main.scrollTo({ top: 0, behavior: 'smooth' });
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleCloseDetail = () => {
@@ -77,8 +79,8 @@ const HomeContent = ({
         }}
       />
 
-      {/* Button Sector (Now Scroll Top) */}
-      <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-4">
+      {/* Button Sector (Now Scroll Top) - 모든 해상도에서 풋터 위에 보이도록 */}
+      <div className="fixed bottom-28 left-1/2 -translate-x-1/2 z-[60] flex flex-col items-center gap-4">
         <p className="text-sm italic text-gray-500 font-serif tracking-wide pointer-events-none hidden md:block">
           Explore More Destinations
         </p>
@@ -114,7 +116,7 @@ export default function Home() {
     setSelectedDest(null);
     setCardRect(null);
     setExitRect(null);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('main-scroll')?.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

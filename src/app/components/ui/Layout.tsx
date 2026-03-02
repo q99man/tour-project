@@ -16,8 +16,8 @@ export const Layout = ({ children, onLogoClick }: LayoutProps) => {
         <Header onLogoClick={onLogoClick} />
       </div>
 
-      {/* Scrollable Main Content */}
-      <main className="flex-1 overflow-y-auto overflow-x-hidden relative z-10">
+      {/* Scrollable Main Content - Back to Top 스크롤 대상 */}
+      <main id="main-scroll" className="flex-1 overflow-y-auto overflow-x-hidden relative z-10">
         <div className="min-h-full w-full max-w-[1800px] mx-auto px-6 md:px-12 py-12 flex flex-col items-center">
           {children}
         </div>
