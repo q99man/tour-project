@@ -18,7 +18,7 @@ export const DestinationGrid = ({ onSelect }: DestinationGridProps) => {
             layout
             key={dest.id}
             data-dest-id={dest.id}
-            className="group relative overflow-hidden bg-gray-200 aspect-[4/5] w-full cursor-pointer"
+            className="group relative overflow-hidden bg-gray-200 aspect-[4/5] w-full cursor-pointer rounded-lg shadow-lg shadow-gray-300/40 ring-1 ring-black/5"
             onClick={(e) => onSelect(dest, e.currentTarget.getBoundingClientRect())}
             whileHover={{ scale: 1.04 }}
             transition={{ type: 'tween', duration: 0.15, ease: 'easeOut' }}
@@ -31,7 +31,7 @@ export const DestinationGrid = ({ onSelect }: DestinationGridProps) => {
             />
             
             {/* Overlay Hover Reveal */}
-            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out flex flex-col justify-end p-8">
+            <div className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out flex flex-col justify-end p-8">
               <div className="transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-out">
                 <p className="text-white/80 text-sm tracking-widest uppercase mb-2 font-sans">{dest.category}</p>
                 <h3 className="text-white text-4xl md:text-5xl font-bold tracking-tighter font-serif">{dest.title}</h3>

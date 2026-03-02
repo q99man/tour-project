@@ -64,9 +64,9 @@ const HomeContent = ({
 
   return (
     <>
-      {/* Giant Background Typography */}
+      {/* Giant Background Typography - 몰입감용, 글·사진이 돋보이도록 살짝 완화 */}
       <div className="fixed top-1/2 left-0 w-full -translate-y-1/2 pointer-events-none z-0 overflow-hidden flex justify-center select-none">
-        <h2 className="text-[18vw] font-black tracking-tighter text-gray-100 whitespace-nowrap opacity-60 mix-blend-multiply font-serif">
+        <h2 className="text-[18vw] font-black tracking-tighter text-gray-200/70 whitespace-nowrap font-serif">
           DEPARTURE
         </h2>
       </div>
