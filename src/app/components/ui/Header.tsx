@@ -107,7 +107,7 @@ export const Header = ({ onLogoClick }: { onLogoClick?: () => void }) => {
         <span className="block w-6 h-0.5 bg-current" />
       </button>
 
-      {/* Mobile: 서랍 메뉴 - body에 포탈로 렌더, 아래로 슬라이드 + 살짝 투명 */}
+      {/* Mobile: 서랍 메뉴 - body에 포탈로 렌더, 빠르고 부드러운 아래 슬라이드 */}
       {typeof document !== 'undefined' &&
         createPortal(
           <AnimatePresence>
@@ -117,16 +117,16 @@ export const Header = ({ onLogoClick }: { onLogoClick?: () => void }) => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.25 }}
+                  transition={{ duration: 0.18, ease: 'easeOut' }}
                   className="fixed inset-0 bg-black/25 z-[70] md:hidden backdrop-blur-[2px]"
                   onClick={() => setMobileOpen(false)}
                   aria-hidden
                 />
                 <motion.aside
-                  initial={{ opacity: 0, y: '-100%' }}
+                  initial={{ opacity: 0, y: -32 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: '-100%' }}
-                  transition={{ type: 'tween', duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+                  exit={{ opacity: 0, y: -32 }}
+                  transition={{ type: 'tween', duration: 0.2, ease: 'easeOut' }}
                   className="fixed top-0 left-0 right-0 max-h-[85vh] z-[80] md:hidden flex flex-col rounded-b-2xl overflow-hidden bg-white/95 backdrop-blur-md shadow-2xl border-b border-gray-200/50"
                 >
                   <div className="p-5 flex justify-between items-center border-b border-gray-200/80 shrink-0">
@@ -144,7 +144,7 @@ export const Header = ({ onLogoClick }: { onLogoClick?: () => void }) => {
                     <ul className="list-none m-0 p-0">
                       {NAVIGATION.map((item) => (
                         <li key={item.label} className="border-b border-gray-100 last:border-0">
-                          <p className="pt-4 pb-2 text-xs font-bold tracking-widest uppercase text-gray-500">
+                          <p className="pt-4 pb-2 text-sm font-semibold tracking-widest uppercase text-gray-700">
                             {item.label}
                           </p>
                           <ul className="list-none m-0 pb-4 pl-0">
