@@ -66,18 +66,10 @@ export const CategoryGrid = ({ onSelect }: CategoryGridProps) => {
             </div>
 
             {/* 텍스트 영역 */}
-            <div className="relative z-10 h-full flex flex-col justify-between p-7 md:p-8">
-              <div className="flex flex-col gap-3">
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold tracking-tight text-white">
-                  {cat.name}
-                </h3>
-              </div>
-
-              <div className="flex items-center justify-between pt-4">
-                <p className="text-xs md:text-sm text-gray-100/90 font-medium tracking-wide">
-                  {Math.min(5, cat.count)} of {cat.count}
-                </p>
-              </div>
+            <div className="relative z-10 h-full flex flex-col justify-end p-7 md:p-8">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold tracking-tight text-white">
+                {cat.name}
+              </h3>
             </div>
           </motion.button>
         ))}

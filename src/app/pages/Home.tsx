@@ -39,9 +39,7 @@ const HomeContent = ({
   setSelectedCategory,
 }: HomeContentProps) => {
   const handleScrollTop = () => {
-    const main = document.getElementById('main-scroll');
-    if (main) main.scrollTo({ top: 0, behavior: 'smooth' });
-    else window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleCloseDetail = () => {
@@ -79,37 +77,25 @@ const HomeContent = ({
 
       {/* Intro section */}
       <div className="relative z-10 w-full max-w-5xl mx-auto mb-10 md:mb-14 flex flex-col gap-4">
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex flex-col gap-2">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold tracking-tight text-gray-900">
-              {selectedCategory ? selectedCategory : '어떤 여행을 떠나고 싶으신가요?'}
-            </h1>
-          </div>
-
-          <div className="hidden md:flex flex-col items-end gap-2 text-right">
-            {selectedCategory && (
-              <button
-                type="button"
-                onClick={() => setSelectedCategory(null)}
-                className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.22em] uppercase text-gray-700 hover:text-black cursor-pointer"
-              >
-                <ArrowLeft size={16} />
-                Back to categories
-              </button>
-            )}
-          </div>
-        </div>
-
+        {/* 카테고리 선택 시 뒤로가기 - 상세보기와 유사한 원형 아이콘 버튼 */}
         {selectedCategory && (
           <button
             type="button"
             onClick={() => setSelectedCategory(null)}
-            className="md:hidden inline-flex items-center gap-2 self-start text-[11px] font-semibold tracking-[0.22em] uppercase text-gray-700 hover:text-black cursor-pointer mt-1"
+            className="absolute top-0 right-0 md:top-1 md:right-0 z-20 p-2.5 md:p-3 bg-white/90 backdrop-blur-md rounded-full hover:bg-black hover:text-white transition-colors shadow-sm border border-gray-200/60 cursor-pointer"
+            aria-label="카테고리 목록으로 돌아가기"
           >
-            <ArrowLeft size={16} />
-            카테고리로 돌아가기
+            <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
           </button>
         )}
+
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold tracking-tight text-gray-900">
+              {selectedCategory ? selectedCategory : '나만의 그늘을 찾아 떠나 볼까요?'}
+            </h1>
+          </div>
+        </div>
       </div>
 
       {/* Grid section */}
@@ -196,7 +182,7 @@ export default function Home() {
     setCardRect(null);
     setExitRect(null);
     setSelectedCategory(null);
-    document.getElementById('main-scroll')?.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
